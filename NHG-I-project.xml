@@ -172,21 +172,29 @@ assert hdr.size() > 0
 
 // Availability validation only, separate content validation for clear error reports. 
 // FYI: a non null/empty string evaluates to true.
-assert hdr[0]</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="ab7d18af-4a99-4a63-b01e-92541bebe59e" name="Validate expired-after hdr value"><con:configuration><scriptText>// Assertion assumes availibility has already been validated
+assert hdr[0]</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="ab7d18af-4a99-4a63-b01e-92541bebe59e" name="Validate expired-after hdr value"><con:configuration><scriptText>import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
+// Assertion assumes availibility has already been validated
 dateHdr = messageExchange.responseHeaders["X-Expires-After"][0]
 
 // Validate format:
 
 // Sample timestamp: Fri Oct 03 08:06:58 UTC 2025
-utcDateFormat = "E MMM dd HH:mm:ss Z yyyy"
-expirationDate = Date.parse(utcDateFormat, dateHdr)
+utcDateFormat = "E MMM dd HH:mm:ss z yyyy"
+formatter = DateTimeFormatter.ofPattern(utcDateFormat)
+expirationDate = ZonedDateTime.parse(dateHdr, formatter)
+
 assert expirationDate
 
 // Validate date is in the future:
-
-now = new Date()
-assert expirationDate.compareTo(now)
-</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="username2" value="" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>password</con:entry><con:entry>username2</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script" id="1fdc241e-cccd-407a-bb2a-ecf783de0ad4"><con:settings/><con:config><script>//NOTE: Testing the demo API login function is tricky since it seems to accept any and all usr/pwd combination as correct.
+now = ZonedDateTime.now()
+log.info("NOW >>" +now)
+assert expirationDate.isAfter(now)
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="password" value="abc123"/>
+  <con:entry key="username2" value="test"/>
+</con:parameters><con:parameterOrder><con:entry>password</con:entry><con:entry>username2</con:entry></con:parameterOrder></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script" id="1fdc241e-cccd-407a-bb2a-ecf783de0ad4"><con:settings/><con:config><script>//NOTE: Testing the demo API login function is tricky since it seems to accept any and all usr/pwd combination as correct.
 
 // Why is the editor not accepting my 10-key pad movement keys... :/
 
