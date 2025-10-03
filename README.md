@@ -51,3 +51,5 @@ Dit resulteert hoe dan ook in flink wat dubbele code & toename in maintenance bu
 
 
 Hopelijk zit ik er finaal naast met deze bevindingen...
+
+![Test Resultaat](img/test_result.jpg "Test Resultaat")
