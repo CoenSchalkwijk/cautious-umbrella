@@ -25,7 +25,7 @@ Zelf ben ik bekend met [Katalon](https://katalon.com), maar heb dit vrij vlot ui
   - `X-Expires-After`: minder spannend, niet minder test worthy.
   - Willekeurige usr/pwd combinaties lijken gewoon te worden geaccepteerd.
   - **Q** Waar kan ik response objecten definieren & valideren in SoapUI?
-**A** De request editor biedt mogelijkheden, maar niet op een re-usable manier.
+    **A** De request editor biedt mogelijkheden, maar niet op een re-usable manier.
   - Het maken van een login request met ontbrekende querystring parameters via point/click UI is niet straightforward of uberhaubt mogelijk via de request editor?
   - De twee bovenstaande headers zijn wel expliciet gedefinieerd in Swagger. Request assertions lijken geen optie voor response header validatie te bieden. Dan maar in script.
   - Uitgangspunt is om zoveel mogelijk gebruik te maken van specifieke editor opties, dat is wel even zoeken in SoapUI.
@@ -41,4 +41,13 @@ Thu Oct 02 15:10:05 CEST 2025:ERROR:An error occurred [Index 2 out of bounds for
 Een probleem met referenties naar querystring parameters in de definitie van een request. De SoapUI editor heeft bij de endpoint 2 parameters met dezelfde naam weten te plaatsen. Verwijderen middels de editor lijkt niet mogelijk.
 Moet de vrij uitgebreide project XML met de hand aanpassen om dit probleem te verhelpen; zonde van de tijd.
 
-Ik heb mijn zinnen gezet op het uitvoeren van een login request zonder de vereist querystring parameters; een `low code` omgeving valt of staat met de mogelijkheden om de eigen beperkingen met code te omzeilen. 
+Ik heb mijn zinnen gezet op het uitvoeren van een login request zonder de vereist querystring parameters; een `low code` omgeving valt of staat met de mogelijkheden om de eigen beperkingen met code te omzeilen.
+
+
+Het ziet er na veel `trial & error` en lezen van de documentatie naar uit dat het niet anders kan dan of handmatig een uniek endpoint definieren (naming hell: loginUser, loginUserPwd, ...) of een volledige Groovy implementatie te bouwen.
+
+
+Dit resulteert hoe dan ook in flink wat dubbele code & toename in maintenance burden.
+
+
+Hopelijk zit ik er finaal naast met deze bevindingen...
